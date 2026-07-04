@@ -43,6 +43,16 @@ function SopHeadings() {
     );
   };
 
+  // On desktop both panels are visible side by side, so auto-selecting the
+  // first heading is a nice convenience — you land on something useful
+  // immediately. On mobile, though, the list and detail panel take turns
+  // filling the screen, so auto-selecting would skip straight past the
+  // list and land on the detail view with no way back in. `lg` is
+  // Tailwind's 1024px breakpoint — keep this in sync with the
+  // `lg:grid-cols-[300px_1fr]` layout below.
+  const isDesktopViewport = () =>
+    typeof window !== "undefined" && window.innerWidth >= 1024;
+
   const fetchHeadings = async (selectedId = null) => {
     try {
       setLoading(true);
@@ -57,7 +67,7 @@ function SopHeadings() {
       if (selectedId) {
         const updated = data.find((item) => item.id === selectedId);
         setSelectedHeading(updated || null);
-      } else if (data.length > 0 && !selectedHeading) {
+      } else if (data.length > 0 && !selectedHeading && isDesktopViewport()) {
         setSelectedHeading(data[0]);
       } else if (data.length === 0) {
         setSelectedHeading(null);
