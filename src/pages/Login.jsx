@@ -52,7 +52,7 @@ navigate("/dashboard");
   <div className="w-full max-w-5xl bg-white rounded-2xl shadow-xl overflow-hidden grid md:grid-cols-2">
     
     {/* Left - Form */}
-    <div className="p-10 md:p-14 flex flex-col justify-center">
+    <div className="p-6 sm:p-10 md:p-14 flex flex-col justify-center">
       <div className="mb-8">
         <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full mb-4 tracking-wide uppercase">
           AI SOP ASSISTANT

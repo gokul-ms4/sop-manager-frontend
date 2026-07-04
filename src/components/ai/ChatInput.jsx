@@ -10,7 +10,7 @@ function ChatInput({ question, setQuestion, loading, onSubmit }) {
   };
 
   return (
-    <div className="px-6 py-4 border-t border-slate-100 shrink-0">
+    <div className="px-3 sm:px-6 py-3 sm:py-4 border-t border-slate-100 shrink-0">
       <form onSubmit={onSubmit} className="flex items-end gap-3">
         <textarea
           value={question}

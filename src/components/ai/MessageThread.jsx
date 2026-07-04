@@ -194,7 +194,7 @@ function TypingIndicator() {
 function UserBubble({ message }) {
   return (
     <div className="flex items-end gap-3 justify-end">
-      <div className="max-w-[72%]">
+      <div className="max-w-[85%] sm:max-w-[72%]">
         <div className="flex items-center justify-end gap-1.5 mb-1.5">
           <span
             className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${
@@ -226,7 +226,7 @@ function AIBubble({ message, animate }) {
         <Bot size={16} className="text-emerald-600" />
       </div>
       <div
-        className={`max-w-[80%] px-5 py-4 rounded-2xl rounded-tl-sm border ${
+        className={`max-w-[88%] sm:max-w-[80%] px-4 sm:px-5 py-3.5 sm:py-4 rounded-2xl rounded-tl-sm border ${
           message.error
             ? "bg-red-50 border-red-100 text-red-600"
             : "bg-slate-50 border-slate-100"
@@ -282,7 +282,7 @@ function MessageThread({ messages, loading, bottomRef }) {
   );
 
   return (
-    <div className="flex-1 overflow-y-auto px-6 py-5 space-y-5 min-h-0">
+    <div className="flex-1 overflow-y-auto px-3 sm:px-6 py-4 sm:py-5 space-y-5 min-h-0">
       {messages.map((msg, i) =>
         msg.role === "user" ? (
           <UserBubble key={i} message={msg} />

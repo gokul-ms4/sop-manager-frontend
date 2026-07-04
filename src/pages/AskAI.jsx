@@ -107,7 +107,7 @@ useEffect(() => {
 
   return (
     <div className="h-full flex flex-col gap-5">
-      <div className="bg-slate-900 rounded-2xl p-7 text-white relative overflow-hidden shrink-0">
+      <div className="bg-slate-900 rounded-2xl p-5 sm:p-7 text-white relative overflow-hidden shrink-0">
         <div className="absolute w-64 h-64 bg-emerald-600/20 rounded-full -right-16 -top-16" />
 
         <div className="relative z-10">
@@ -116,7 +116,7 @@ useEffect(() => {
             SOP AI Assistant
           </div>
 
-          <h1 className="text-2xl font-bold mb-1">
+          <h1 className="text-xl sm:text-2xl font-bold mb-1">
             Ask questions from your SOP knowledge base
           </h1>
 
@@ -128,7 +128,7 @@ useEffect(() => {
       </div>
 
       <div className="flex-1 bg-white rounded-2xl border border-slate-100 shadow-sm flex flex-col overflow-hidden min-h-0">
-        <div className="px-6 py-3 border-b border-slate-100 flex items-center justify-between shrink-0">
+        <div className="px-4 sm:px-6 py-3 border-b border-slate-100 flex items-center justify-between gap-3 flex-wrap shrink-0">
           <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
             Conversation
           </p>

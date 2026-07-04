@@ -318,31 +318,51 @@ function SopHeadings() {
         />
       )}
 
-      <div className="h-full grid grid-cols-[300px_1fr] gap-5">
-        <HeadingList
-          headings={headings}
-          loading={loading}
-          selectedHeading={selectedHeading}
-          search={search}
-          setSearch={setSearch}
-          onCreateHeading={openCreateHeadingModal}
-          onSelectHeading={setSelectedHeading}
-        />
+      {/*
+        Mobile: single-column master-detail. The list and detail panel take
+        turns filling the screen — picking a heading swaps to the detail
+        view, and the back button in SopDetails swaps back.
+        Desktop (lg+): both panels are shown side by side at all times,
+        regardless of selection state.
+      */}
+      <div className="h-full min-h-0 grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-5">
+        <div
+          className={`h-full min-h-0 ${
+            selectedHeading ? "hidden lg:flex lg:flex-col" : "flex flex-col"
+          }`}
+        >
+          <HeadingList
+            headings={headings}
+            loading={loading}
+            selectedHeading={selectedHeading}
+            search={search}
+            setSearch={setSearch}
+            onCreateHeading={openCreateHeadingModal}
+            onSelectHeading={setSelectedHeading}
+          />
+        </div>
 
-        <SopDetails
-          selectedHeading={selectedHeading}
-          onDeleteHeading={(heading) =>
-            setDeleteTarget({
-              id: heading.id,
-              heading: heading.heading,
-            })
-          }
-          onAddItem={openItemModal}
-          onEditHeading={openEditHeadingModal}
-          onEditItem={openEditItemModal}
-          onDeleteItem={(item) => setDeleteItemTarget(item)}
-          onReorder={handleReorder}
-        />
+        <div
+          className={`h-full min-h-0 ${
+            selectedHeading ? "flex flex-col" : "hidden lg:flex lg:flex-col"
+          }`}
+        >
+          <SopDetails
+            selectedHeading={selectedHeading}
+            onBack={() => setSelectedHeading(null)}
+            onDeleteHeading={(heading) =>
+              setDeleteTarget({
+                id: heading.id,
+                heading: heading.heading,
+              })
+            }
+            onAddItem={openItemModal}
+            onEditHeading={openEditHeadingModal}
+            onEditItem={openEditItemModal}
+            onDeleteItem={(item) => setDeleteItemTarget(item)}
+            onReorder={handleReorder}
+          />
+        </div>
       </div>
     </>
   );

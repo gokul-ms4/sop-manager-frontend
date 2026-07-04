@@ -188,9 +188,9 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="max-w-5xl mx-auto h-full flex flex-col gap-5 overflow-y-auto pr-1">
+    <div className="max-w-5xl mx-auto h-full flex flex-col gap-4 sm:gap-5 overflow-y-auto pr-1">
       {/* Hero */}
-      <div className="bg-slate-800 rounded-2xl p-7 text-white relative overflow-hidden shrink-0">
+      <div className="bg-slate-800 rounded-2xl p-5 sm:p-7 text-white relative overflow-hidden shrink-0">
         <div className="absolute w-64 h-64 bg-emerald-600/20 rounded-full -right-16 -top-16" />
         <div className="absolute w-80 h-80 bg-emerald-500/10 rounded-full -left-20 -bottom-20" />
         <div className="relative z-10">
@@ -198,7 +198,7 @@ function Dashboard() {
             <Sparkles size={13} />
             AI Knowledge System
           </div>
-          <h1 className="text-2xl font-bold text-white mb-1">Welcome back</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">Welcome back</h1>
           <p className="text-slate-400 text-sm leading-relaxed max-w-xl">
             Manage SOPs, organize process knowledge, generate AI-ready chunks,
             and ask intelligent questions from your company knowledge base.
@@ -207,7 +207,7 @@ function Dashboard() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4 shrink-0">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 shrink-0">
         <DashboardCard title="SOP Headings" value={stats.headings} icon={FileText} />
         <DashboardCard title="SOP Items"    value={stats.items}    icon={Layers}   />
         <DashboardCard title="AI Chunks"    value={stats.chunks}   icon={Bot}      />
@@ -243,7 +243,7 @@ function Dashboard() {
         <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
           Quick Actions
         </p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <QuickAction
             title="Create New SOP"
             description="Add a new SOP heading and organize related process steps."
