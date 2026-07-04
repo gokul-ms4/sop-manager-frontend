@@ -113,27 +113,33 @@ function SopItem({ sop }) {
 
 function QuestionItem({ item }) {
   const isQuick = item.mode !== "full";
+
   return (
     <Link
       to="/ask-ai"
+      state={{
+        autoQuestion: item.text,
+        autoMode: item.mode,
+      }}
       className="group flex items-center gap-3 p-3 rounded-xl border border-slate-100 hover:border-emerald-200 hover:bg-emerald-50/40 transition"
     >
-      {/* Icon */}
       <div className="w-8 h-8 rounded-lg bg-slate-100 group-hover:bg-emerald-100 flex items-center justify-center shrink-0 transition">
-        <MessageSquare size={14} className="text-slate-500 group-hover:text-emerald-600 transition" />
+        <MessageSquare
+          size={14}
+          className="text-slate-500 group-hover:text-emerald-600 transition"
+        />
       </div>
 
-      {/* Text */}
       <div className="flex-1 min-w-0">
         <p className="font-semibold text-sm text-slate-800 truncate">
           {item.text}
         </p>
+
         <p className="text-xs text-slate-400 mt-0.5">
           {isQuick ? "Quick Answer" : "Full SOP"}
         </p>
       </div>
 
-      {/* Mode badge */}
       <span
         className={`text-[10px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${
           isQuick

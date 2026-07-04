@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Sparkles } from "lucide-react";
 import api from "../api/axios";
 
@@ -11,6 +12,10 @@ function AskAI() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
+  const location = useLocation();
+const navigate = useNavigate();
+const autoAsked = useRef(false);
+
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -27,50 +32,78 @@ function AskAI() {
     localStorage.setItem("recent_questions", JSON.stringify(updated));
   };
 
-  const askQuestion = async (e) => {
-    e.preventDefault();
+ const askQuestion = async (e, forcedQuestion = null, forcedMode = null) => {
+  if (e) e.preventDefault();
 
-    const trimmed = question.trim();
-    if (!trimmed || loading) return;
+  const text = forcedQuestion ?? question.trim();
+  const selectedMode = forcedMode ?? mode;
 
-    const userMsg = { role: "user", text: trimmed, mode };
+  if (!text || loading) return;
 
-    setMessages((prev) => [...prev, userMsg]);
-    setQuestion("");
-    setLoading(true);
-
-    try {
-      const res = await api.post("/api/v1/sop_heading/ask_question", {
-        question: trimmed,
-        mode,
-      });
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "ai",
-          text: res.data.answer,
-          question: res.data.question,
-        },
-      ]);
-
-      saveRecentQuestion(trimmed, mode);
-    } catch (err) {
-      console.error("Failed to ask AI", err.response?.data || err);
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          role: "ai",
-          text: "Something went wrong. Please try again.",
-          question: trimmed,
-          error: true,
-        },
-      ]);
-    } finally {
-      setLoading(false);
-    }
+  const userMsg = {
+    role: "user",
+    text,
+    mode: selectedMode,
   };
+
+  setMessages((prev) => [...prev, userMsg]);
+
+  setQuestion("");
+
+  setLoading(true);
+
+  try {
+    const res = await api.post("/api/v1/sop_heading/ask_question", {
+      question: text,
+      mode: selectedMode,
+    });
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "ai",
+        text: res.data.answer,
+        question: res.data.question,
+      },
+    ]);
+
+    saveRecentQuestion(text, selectedMode);
+  } catch (err) {
+    console.error(err.response?.data || err);
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        role: "ai",
+        text: "Something went wrong. Please try again.",
+        question: text,
+        error: true,
+      },
+    ]);
+  } finally {
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  if (autoAsked.current) return;
+
+  const autoQuestion = location.state?.autoQuestion;
+  if (!autoQuestion) return;
+
+  autoAsked.current = true;
+
+  const autoMode = location.state?.autoMode || "quick";
+
+  setTimeout(() => {
+    askQuestion(null, autoQuestion, autoMode);
+  });
+
+  navigate(location.pathname, {
+    replace: true,
+    state: null,
+  });
+}, [location.state, navigate]);
 
   return (
     <div className="h-full flex flex-col gap-5">
