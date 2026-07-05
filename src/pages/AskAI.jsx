@@ -71,11 +71,25 @@ const autoAsked = useRef(false);
   } catch (err) {
     console.error(err.response?.data || err);
 
+    const status = err.response?.status;
+    const backendMessage = err.response?.data?.error;
+
+    let displayText;
+    if (status === 429) {
+      displayText =
+        backendMessage ||
+        "AI usage limit reached for today. Please try again later.";
+    } else if (backendMessage) {
+      displayText = backendMessage;
+    } else {
+      displayText = "Something went wrong. Please try again.";
+    }
+
     setMessages((prev) => [
       ...prev,
       {
         role: "ai",
-        text: "Something went wrong. Please try again.",
+        text: displayText,
         question: text,
         error: true,
       },
